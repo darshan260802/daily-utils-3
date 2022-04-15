@@ -31,6 +31,11 @@ const Navbar = () => {
     router.push("Login");
   };
 
+  const getHome = () => {
+    // @ts-ignore
+    window.location = "/";
+  }
+
   const toggleMode = () =>{
     const element = document.getElementsByTagName('html')[0];
     const changer = document.getElementById("theme-changer");
@@ -159,7 +164,7 @@ const Navbar = () => {
             className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
           >
             <li>
-              <a href="/" >Get Access</a>
+              <button onClick={getHome} >Get Access</button>
             </li>
             </ul>}
         </div>
