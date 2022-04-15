@@ -46,7 +46,7 @@ const NoteWrapper = (data: ServerNote) => {
     const success = await shareNote(data);
     if(success)
     {
-    const shareLink = `https://dailyutils31.firebaseapp.com/shared/${data.Id}`;
+    const shareLink = `https://daily-utils-3.vercel.app/shared/${data.Id}`;
     navigator.clipboard.writeText(shareLink);
     document.getElementById(`${data.Id}-share-div`)?.classList.add("swap-active")
     }
