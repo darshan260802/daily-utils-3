@@ -1,8 +1,22 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
+import Navbar from '../components/Navbar'
+import { useLayoutEffect } from 'react'
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+
+  useLayoutEffect(() => {
+    const theme = localStorage.getItem("data-theme");
+    if(theme)
+    {
+      document.getElementsByTagName("html")[0].setAttribute("data-theme",theme);
+    }else{
+      localStorage.setItem("data-theme", "cupcake")
+      document.getElementsByTagName("html")[0].setAttribute("data-theme","cupcake");
+    }
+  }, [])
+
+  return <div className='h-screen  w-screen flex flex-col content-between items-center bg-base-100 text-base-content'><Navbar/><Component {...pageProps} /></div>
 }
 
 export default MyApp
