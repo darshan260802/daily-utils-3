@@ -1,6 +1,6 @@
 import { collection, doc, onSnapshot } from "firebase/firestore";
 import { useRouter } from "next/router";
-import React, { FormEvent, useLayoutEffect, useState } from "react";
+import React, { FormEvent, useEffect, useLayoutEffect, useState } from "react";
 import { createNewNote, Note, ServerNote } from "../API/notes";
 import database from "../API/database";
 import NoteWrapper from "../components/NoteWrapper";
@@ -9,6 +9,8 @@ const Notes = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [notes, setNotes] = useState([]);
+  const [displayNotes, setDisplayNotes] = useState(notes);
+  const [search, setSearch] = useState('');
 
   useLayoutEffect(() => {
     if (!localStorage.getItem("userId")) {
@@ -49,6 +51,21 @@ const Notes = () => {
       document.getElementById("new-note-form").reset();
     }
   };
+
+  // todo : filtering search
+  useEffect(() => {
+    setDisplayNotes(notes);
+  }, [notes])
+  useEffect(() => {
+    if(search === '')
+    {
+      setDisplayNotes(notes);
+    }else{
+      setDisplayNotes(notes.filter((item:ServerNote) => {
+        return item.Description.indexOf(search) !== -1 || item.Title.indexOf(search) !== -1 || item.Tag.indexOf(search) !== -1
+      }))
+    }
+  }, [search])
 
   return (
     <>
@@ -120,20 +137,21 @@ const Notes = () => {
         {/* //! Modal End */}
 
         {/* //? Notes Header start*/}
-        <div className="w-full h-10  flex items-center pl-2 drawer-content">
+        <div className="w-full h-12 justify-between  flex items-center px-2">
           <label
             htmlFor="new-note-modal"
             className="btn btn-primary btn-sm modal-button"
           >
             New Note
           </label>
+          <input type="text" className="input input-primary input-sm" placeholder="Search Note" onChange={e => setSearch(e.target.value)} />
         </div>
         {/* //? Notes Header end*/}
 
         {/* //todo: Notes Body Start */}
 
         <div className="h-full w-full overflow-x-hidden mt-5 overflow-y-auto flex flex-wrap lg:justify-start justify-center" >
-        {notes.map((element:ServerNote) => {
+        {displayNotes.map((element:ServerNote) => {
           return (
             <NoteWrapper {...element} key={element.Id} />
           );
