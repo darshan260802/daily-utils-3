@@ -20,11 +20,16 @@ const Todo = () => {
 
     const task = form.task.value;
     const priority = form.priority.value;
-    const deadline = form.deadline.value;
+    const deadline = form.deadline.value === "" ? new Date() : form.deadline.value;
+    
     
 
     const success = await createNewTodo({task, priority, deadline});
-    success && form.reset();
+    if(success)
+    {
+      document.getElementById("new-todo-modal")?.click();
+      form.reset();
+    }
     
     
   }
@@ -146,7 +151,7 @@ const Todo = () => {
       {/* //* MOdal  End */}
 
       {/* //todo: Todo Display Start */}
-      <div className="h-full w-full flex flex-col lg:flex-row">
+      {todos.length ? (<div className="h-full w-full flex flex-col lg:flex-row">
 
       <div className="h-full w-full overflow-x-hidden overflow-y-auto flex items-start flex-wrap justify-around">
         {
@@ -166,7 +171,11 @@ const Todo = () => {
         }
         </div>
       </div>
-        </div>
+        </div>): (
+          <div className="h-full w-full grid place-items-center">
+            <h1 className="btn btn-ghost select-none loading text-base-content">Fetching Data</h1>
+          </div>
+        )}
       {/* //todo: Todo Display End */}
     </div>
   );

@@ -150,13 +150,19 @@ const Notes = () => {
 
         {/* //todo: Notes Body Start */}
 
-        <div className="h-full w-full overflow-x-hidden mt-5 overflow-y-auto flex flex-wrap lg:justify-start justify-center" >
-        {displayNotes.map((element:ServerNote) => {
-          return (
-            <NoteWrapper {...element} key={element.Id} />
-          );
-        })}
-        </div>
+        {notes.length ? (
+          <div className="h-full w-full overflow-x-hidden mt-5 overflow-y-auto flex flex-wrap lg:justify-start justify-center" >
+          {displayNotes.map((element:ServerNote) => {
+            return (
+              <NoteWrapper {...element} key={element.Id} />
+            );
+          })}
+          </div>
+        ) : (
+          <div className="h-full w-full grid place-items-center">
+            <h1 className="btn btn-ghost select-none loading text-base-content">Fetching Data</h1>
+          </div>
+        )}
 
         {/* //todo: Notes Body End */}
       </div>

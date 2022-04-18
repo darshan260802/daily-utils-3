@@ -10,11 +10,12 @@ const TodoWrapper = ({
   Status,
   Id,
 }: ServerTodo) => {
-  const badgeColor = {
-    low: "success",
-    normal: "warning",
-    urgent: "error",
-  };
+
+  const badgeColor = Priority === "low"
+  ? "bg-success"
+  : Priority === "normal"
+  ? "bg-warning"
+  : "bg-error"
 
   const handleComplete = async() => {
     await completeTodo(Id as string);
@@ -32,13 +33,7 @@ const TodoWrapper = ({
         <div>
           Due: {SDeadline}
           <div
-            className={`px-5 py-3 mx-5 badge text-neutral bg-${
-              Priority === "low"
-                ? badgeColor.low
-                : Priority === "normal"
-                ? badgeColor.normal
-                : badgeColor.urgent
-            }`}
+            className={`px-5 py-3 mx-5 badge text-neutral ${badgeColor}`}
           >
             {Priority.toUpperCase()}
           </div>
