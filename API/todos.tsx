@@ -19,7 +19,7 @@ export interface ServerTodo {
 
 export const createNewTodo = async({task, priority, deadline}:ClientTodo) => {
     const userId = localStorage.getItem("userId") as string;
-    const userRef = doc(Database, "TestUser", userId)
+    const userRef = doc(Database, "Users", userId)
     
     const result = await addDoc(collection(userRef, "Todos"), {Task: task, Priority: priority, Deadline: new Date(deadline).getTime(), CreatedAt: new Date().getTime(), Status: "pending"}).then(() => true).catch(() => false);
     return result;
@@ -27,7 +27,7 @@ export const createNewTodo = async({task, priority, deadline}:ClientTodo) => {
 
 export const completeTodo = async(todoId:string) =>{
     const userId = localStorage.getItem("userId") as string;
-    const userRef = doc(Database, "TestUser", userId)
+    const userRef = doc(Database, "Users", userId)
 
     const result = await updateDoc(doc(userRef, "Todos", todoId), {Status: "completed"}).then(() => true).catch(() => false);
     return result;
@@ -35,7 +35,7 @@ export const completeTodo = async(todoId:string) =>{
 
 export const deleteTodo = async(todoId:string) =>{
     const userId = localStorage.getItem("userId") as string;
-    const userRef = doc(Database, "TestUser", userId)
+    const userRef = doc(Database, "Users", userId)
 
     const result = await deleteDoc(doc(userRef, "Todos", todoId)).then(() => true).catch(() => false);
     return result;

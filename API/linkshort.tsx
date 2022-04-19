@@ -25,7 +25,7 @@ export const shortLink = async(long:string) => {
     if(!Short) return false;
 
     const userId = localStorage.getItem("userId") as string ;
-    const userRef = doc(Database, "TestUser", userId);
+    const userRef = doc(Database, "Users", userId);
 
     const linkId = await addDoc(collection(userRef, "Links"), {Long: long, Short: Short, CreatedAt: new Date().getTime()}).then(res => res.id).catch(() => false);
     return linkId;
@@ -35,7 +35,7 @@ export const shortLink = async(long:string) => {
 export const deleteSingleLink = async(id:string) =>{
     
     const userId = localStorage.getItem("userId") as string ;
-    const userRef = doc(Database, "TestUser", userId);
+    const userRef = doc(Database, "Users", userId);
     const result = await deleteDoc(doc(userRef, "Links", id)).then(res => true).catch(err => false)
     return result;
     }

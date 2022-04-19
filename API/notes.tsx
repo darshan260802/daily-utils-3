@@ -23,7 +23,7 @@ export interface ServerNote {
   export const createNewNote = async({noteTitle, noteDescription, noteTag}:Note) => {
     
     const userId = localStorage.getItem("userId") as string ;
-    const userRef = doc(database, "TestUser", userId);
+    const userRef = doc(database, "Users", userId);
     
     const noteId = await addDoc(collection(userRef, "Notes"), {Title: noteTitle, Description: noteDescription, Tag: noteTag}).then(res => res.id).catch(err => false);
     
@@ -34,7 +34,7 @@ export interface ServerNote {
   export const deleteSingleNote = async(id:string) =>{
     
   const userId = localStorage.getItem("userId") as string ;
-  const userRef = doc(database, "TestUser", userId);
+  const userRef = doc(database, "Users", userId);
   const result = await deleteDoc(doc(userRef, "Notes", id)).then(res => true).catch(err => false)
   return result;
   }

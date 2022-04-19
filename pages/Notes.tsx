@@ -20,7 +20,7 @@ const Notes = () => {
     }
 
     const userId = localStorage.getItem("userId") as string;
-    const userRef = doc(database, "TestUser", userId);
+    const userRef = doc(database, "Users", userId);
 
     onSnapshot(collection(userRef, "Notes"), (data) => {
             

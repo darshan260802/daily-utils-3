@@ -39,7 +39,7 @@ const Linkshort = () => {
     }
 
     const userId = localStorage.getItem("userId") as string;
-    const userRef = doc(Database, "TestUser", userId);
+    const userRef = doc(Database, "Users", userId);
     onSnapshot(collection(userRef, "Links"), (data) => {
       // @ts-ignore
       setLinks(data.docs.map((item) => {

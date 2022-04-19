@@ -45,7 +45,7 @@ const Todo = () => {
       router.replace("Login");
       return
     }
-    const userRef = doc(Database, "TestUser", userId as string);
+    const userRef = doc(Database, "Users", userId as string);
     onSnapshot(collection(userRef, "Todos") , (data) => {
       // @ts-ignore
       setTodos(data.docs.map((item) => {
