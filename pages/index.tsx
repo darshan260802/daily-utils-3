@@ -64,7 +64,7 @@ const Home: NextPage = () => {
               <li className="list-item text-xl"><span className="text-primary">Protect</span> Your Links With <span className="text-primary">D-DOS Protection</span></li>
               <li className="list-item text-xl"><span className="text-primary">No Ads</span>, <span className="text-primary">Clean UI</span></li>
             </ul>
-            <Link href="Notes" ><a className="btn btn-primary btn-sm my-3" >get started</a></Link>
+            <Link href="Linkshort" ><a className="btn btn-primary btn-sm my-3" >get started</a></Link>
           </div>
 
           <div className="c1-right hidden lg:block h-full">
