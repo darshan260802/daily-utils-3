@@ -2,12 +2,13 @@ import { collection, doc, onSnapshot } from "firebase/firestore";
 import { useRouter } from "next/router";
 import React, { FormEvent, useEffect, useLayoutEffect, useState } from "react";
 import { createNewNote, Note, ServerNote } from "../API/notes";
-import database from "../API/database";
+import database, { Auth } from "../API/database";
 import NoteWrapper from "../components/NoteWrapper";
 
 const Notes = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [fetching, setFetching] = useState(true);
   const [notes, setNotes] = useState([]);
   const [displayNotes, setDisplayNotes] = useState(notes);
   const [search, setSearch] = useState('');
@@ -22,6 +23,7 @@ const Notes = () => {
     const userRef = doc(database, "TestUser", userId);
 
     onSnapshot(collection(userRef, "Notes"), (data) => {
+            
       //@ts-ignore
       setNotes(data.docs.map((item) => {
         return{
@@ -29,6 +31,7 @@ const Notes = () => {
           Id: item.id
         };
       }));
+      setFetching(false);
     });    
   }, []);
 
@@ -53,7 +56,7 @@ const Notes = () => {
   };
 
   // todo : filtering search
-  useEffect(() => {
+  useEffect(() => {    
     setDisplayNotes(notes);
   }, [notes])
   useEffect(() => {
@@ -150,7 +153,7 @@ const Notes = () => {
 
         {/* //todo: Notes Body Start */}
 
-        {notes.length ? (
+        {!fetching ? (
           <div className="h-full w-full overflow-x-hidden mt-5 overflow-y-auto flex flex-wrap lg:justify-start justify-center" >
           {displayNotes.map((element:ServerNote) => {
             return (

@@ -9,6 +9,8 @@ const Todo = () => {
 
   const date = new Date();
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [fetching, setFetching] = useState(true);
   const [todos, setTodos] = useState([]);
   const today = `${date.getFullYear()}-${date.getMonth()+1 >= 10 ? date.getMonth()+1 : '0'+(date.getMonth()+1)}-${date.getDate()}`
 
@@ -24,7 +26,9 @@ const Todo = () => {
     
     
 
+    setLoading(true)
     const success = await createNewTodo({task, priority, deadline});
+    setLoading(false)
     if(success)
     {
       document.getElementById("new-todo-modal")?.click();
@@ -56,6 +60,7 @@ const Todo = () => {
         }
 
       }))
+      setFetching(false);
     })
   }, [])
 
@@ -142,7 +147,7 @@ const Todo = () => {
               <span className="bg-primary text-primary-content">Deadline</span>
               <input type="date" name="deadline" id="" className="input input-primary w-full" min={today} />
             </div>
-            <input type="submit" value="Submit" className="btn w-full btn-primary" />
+            <input type="submit" value="Create TODO" className={`btn w-full btn-primary ${loading && "loading"}`} />
           </form>
           {/* //* MOdal content End */}
 
@@ -151,7 +156,7 @@ const Todo = () => {
       {/* //* MOdal  End */}
 
       {/* //todo: Todo Display Start */}
-      {todos.length ? (<div className="h-full w-full flex flex-col lg:flex-row">
+      {!fetching ? (<div className="h-full w-full flex flex-col lg:flex-row">
 
       <div className="h-full w-full overflow-x-hidden overflow-y-auto flex items-start flex-wrap justify-around">
         {

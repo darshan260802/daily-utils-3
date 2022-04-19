@@ -16,21 +16,27 @@ const NoteWrapper = (data: ServerNote) => {
 
   // todo:  Translate function
   const translate = async(to:string) =>{
-
+    console.log("run");
+    
     if(!elementD || !elementT) return;
+    console.log("run");
 
-    const text = data.Title+"&nbsp;"+data.Description;
-    const url = "https://text-translate-by-darshan.herokuapp.com/api/translate";
-    const body = {
-      text,
-      to,
-      delimeter:"&nbsp;"
-    }
-    await axios.post(url, body).then(res => {
-      elementT.innerHTML = res.data.Title;
-      elementD.innerHTML = res.data.Description;
-      console.log(res.data.Description);
-      
+    const options = {
+      method: 'POST',
+      url: 'https://microsoft-translator-text.p.rapidapi.com/translate',
+      params: {'api-version': '3.0', to: to, textType: 'plain', profanityAction: 'NoAction'},
+      headers: {
+        'content-type': 'application/json',
+        'X-RapidAPI-Host': 'microsoft-translator-text.p.rapidapi.com',
+        'X-RapidAPI-Key': '80cf7f649emsh2dbdc2572126428p1b5afbjsn2998d99ca75f'
+      },
+      data: `[{"Text":"${data.Title}"},{"Text":"${data.Description}"}]`
+    };
+
+    // @ts-ignore
+    await axios.request(options).then(res => {
+      elementT.innerHTML = res.data[0].translations[0].text;
+      elementD.innerHTML = res.data[1].translations[0].text;      
     }).catch(err => console.error({err}))
   }
 

@@ -37,7 +37,7 @@ export interface ServerNote {
   const userRef = doc(database, "TestUser", userId);
   const result = await deleteDoc(doc(userRef, "Notes", id)).then(res => true).catch(err => false)
   return result;
-}
+  }
 
 
 // !

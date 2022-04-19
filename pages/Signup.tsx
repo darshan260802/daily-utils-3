@@ -4,18 +4,16 @@ import React, { FormEvent, useLayoutEffect, useState } from "react";
 import { userSignup } from "../API/user";
 
 const Signup = () => {
+  const [loading, setLoading] = useState(false);
 
-    const [loading, setLoading] = useState(false);
+  useLayoutEffect(() => {
+    const user = localStorage.getItem("userId");
+    if (user) {
+      router.replace("/");
+    }
+  }, []);
 
-    useLayoutEffect(() => {
-        const user = localStorage.getItem("userId");
-        if(user)
-        {
-          router.replace('/');
-        }
-      }, [])
-
-    const router = useRouter();
+  const router = useRouter();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -33,18 +31,17 @@ const Signup = () => {
     const success = await userSignup({ userName, userEmail, userPassword });
     setLoading(false);
 
-    if(success)
-    {
-        router.push('/')
-    }else{
-        alert("User With This Email, Already Exist!");
+    if (success) {
+      router.push("Login");
+    } else {
+      alert("User With This Email, Already Exist!");
     }
   };
 
   return (
     <form onSubmit={(e) => handleSubmit(e)} className="h-full w-full">
       <div className="h-full w-full grid place-items-center">
-        <div className=" h-4/6 w-96  flex flex-col justify-evenly items-center ">
+        <div className=" h-3/5 w-96  flex flex-col justify-evenly items-center ">
           {/* //! Logo */}
 
           <div className="w-11/12 flex justify-end">
@@ -97,16 +94,26 @@ const Signup = () => {
           </div>
 
           {/* //! Login Button */}
-          <button className={`btn btn-primary w-11/12 ${loading && 'loading'} `} type="submit">
+          <button
+            className={`btn btn-primary w-11/12 ${loading && "loading"} `}
+            type="submit"
+          >
             Signup
           </button>
 
           {/* //! Signup redirect */}
-          <div className="flex w-11/12 justify-end select-none">
-            Already have an Account?&nbsp;
-            <Link href="Login">
-              <a className="text-primary">Login</a>
-            </Link>
+          <div className="flex w-11/12 justify-between items-center select-none">
+            <span className="btn btn-xs btn-ghost">
+              <Link href="ForgotPassword">
+                <a className="text-primary">forgot password</a>
+              </Link>
+            </span>
+            <span className="text-xs">
+              Already have an Account?&nbsp;
+              <Link href="Login">
+                <a className="text-primary">Login</a>
+              </Link>
+            </span>
           </div>
         </div>
       </div>

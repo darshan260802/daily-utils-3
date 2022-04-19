@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithEmailLink, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, sendEmailVerification, sendPasswordResetEmail, signInWithCustomToken, signInWithEmailAndPassword, signInWithEmailLink, updateProfile } from "firebase/auth";
 import { doc, DocumentData, getDoc, setDoc } from "firebase/firestore";
 import database, { Auth } from "./database";
 const encryptPassword = require("client-pass-protect");
@@ -20,9 +20,11 @@ export const userSignup = async ({
   userEmail,
   userPassword,
 }: User) => {
-  const result = createUserWithEmailAndPassword(Auth, userEmail, userPassword).then(res => {
+  const result = await createUserWithEmailAndPassword(Auth, userEmail, userPassword).then(res => {
     Auth.currentUser && updateProfile(Auth.currentUser, {displayName: userName})
-    localStorage.setItem("userId", res.user.uid)
+    Auth.currentUser && sendEmailVerification(Auth.currentUser).then(() => {
+      alert("Verification Email Has Been Sent! Please Verify To Activate Your Account.")
+    })
     return true;
   }).catch(err => {
     console.error(err);
@@ -37,11 +39,30 @@ export const userLogin = async ({
   userPassword,
 }: User) => {
   const result = signInWithEmailAndPassword(Auth, userEmail, userPassword).then(res => {
-    localStorage.setItem("userId", res.user.uid)
-    return true;
+    if(Auth.currentUser?.emailVerified)
+    {
+      localStorage.setItem("userId", res.user.uid)
+      return true;
+    }else{
+      const resend = confirm("Please Verify Your Email To Continue, Haven't Received Verification Email? Press OK to Resend.");
+      if(resend)
+      {
+        Auth.currentUser && sendEmailVerification(Auth.currentUser)
+      }
+      return false;
+    }
   }).catch(err => {
-    console.error(err);
+    console.log(err);
+    alert("Invalid Email/Password!")
     return false;
   })
   return result;
 };
+
+export const resetPassword = async(email: string) => {
+  await sendPasswordResetEmail(Auth, email).then(() => {
+    alert("Password Reset EMail will be sent if it matches in out Database!");
+  }).catch(() => {
+    alert("Password Reset EMail will be sent if it matches in out Database!");
+  })
+}

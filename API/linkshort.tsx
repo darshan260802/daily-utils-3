@@ -1,8 +1,41 @@
 import axios from "axios";
+import { addDoc, collection, deleteDoc, doc } from "firebase/firestore";
+import Database from "./database";
 
+
+export interface ClientLink{
+    Long: string;
+    Short: string;
+    CreatedAt: Long;
+}
+
+export interface ServerLink{
+    Long: string;
+    Short: string;
+    Id: string;
+    CreatedAt: Long;
+}
 
 export const shortLink = async(long:string) => {
-    const apiKey = "c73678fa73c8679f2d5c87a751c7f2c76a2e0";
-    const url = `https://cutt.ly/api/api.php?key=${apiKey}&short=${long}`;
-    await axios.get(url).then((res:any) => console.log(res.data)).catch((err:any) => console.error(err))
+    const url = `https://api.upto.site/short`;
+    const body = {
+        long: long,
+    }
+    const Short = await axios.post(url, body).then((res:any) => res.data.shortUrl).catch(() => false)
+    if(!Short) return false;
+
+    const userId = localStorage.getItem("userId") as string ;
+    const userRef = doc(Database, "TestUser", userId);
+
+    const linkId = await addDoc(collection(userRef, "Links"), {Long: long, Short: Short, CreatedAt: new Date().getTime()}).then(res => res.id).catch(() => false);
+    return linkId;
 }
+
+// ! 
+export const deleteSingleLink = async(id:string) =>{
+    
+    const userId = localStorage.getItem("userId") as string ;
+    const userRef = doc(Database, "TestUser", userId);
+    const result = await deleteDoc(doc(userRef, "Links", id)).then(res => true).catch(err => false)
+    return result;
+    }

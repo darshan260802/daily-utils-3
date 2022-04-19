@@ -139,9 +139,6 @@ const Navbar = () => {
               <a>Homepage</a>
               </Link>
             </li>
-            <li>
-              <a>Profile</a>
-            </li>
             {isLogin ? (
               <li>
                 <button onClick={logout}>
