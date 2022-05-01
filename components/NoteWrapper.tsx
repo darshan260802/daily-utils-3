@@ -10,16 +10,16 @@ import { useRouter } from "next/router";
 const NoteWrapper = (data: ServerNote) => {
   
   // ! Variables
-  const elementD = document.getElementById(`${data.Id}-Description`)
-  const elementT = document.getElementById(`${data.Id}-Title`)
   const [loading, setLoading] = useState(false);
-
+  
   // todo:  Translate function
   const translate = async(to:string) =>{
+    const elementD = document.getElementById(`${data.Id}-Description`)
+    const elementT = document.getElementById(`${data.Id}-Title`)
     console.log("run");
     
     if(!elementD || !elementT) return;
-    console.log("run");
+    console.log("2run");
 
     const options = {
       method: 'POST',
