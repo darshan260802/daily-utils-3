@@ -43,8 +43,8 @@ const Navbar = () => {
     
     if(element.getAttribute("data-theme") === "cupcake")
     {
-      element.setAttribute("data-theme", "night")
-      localStorage.setItem("data-theme", "night")
+      element.setAttribute("data-theme", "forest")
+      localStorage.setItem("data-theme", "forest")
       changer?.classList.remove("swap-active")
     }
     else
