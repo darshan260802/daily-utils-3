@@ -10,7 +10,15 @@
 
 # next.js
 /.next/
-/out/
+# /out/
+
+# Live
+/API
+/components
+/.firebase
+/pages
+/public
+/styles
 
 # production
 /build
