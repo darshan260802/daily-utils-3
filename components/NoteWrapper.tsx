@@ -61,7 +61,7 @@ const NoteWrapper = (data: ServerNote) => {
   return (
     <>
       <div className="card w-96 h-96 m-5 bg-primary  text-primary-content shadow-xl">
-        <div className="card-body">
+        <div className="card-body overflow-auto" style={{overflowX:"hidden",overflowY:"auto"}}>
           <h2 className="card-title">
             {data.Title} <div className="badge badge-secondary">{data.Tag}</div>{" "}
           </h2>
@@ -87,7 +87,7 @@ const NoteWrapper = (data: ServerNote) => {
             <h3 id={`${data.Id}-Title`} className="text-lg font-bold">
               {data.Title}
             </h3>
-            <p id={`${data.Id}-Description`} className="py-4 overflow-auto">
+            <p id={`${data.Id}-Description`} className="py-4 ">
               {data.Description}
             </p>
             <div className="modal-action">
