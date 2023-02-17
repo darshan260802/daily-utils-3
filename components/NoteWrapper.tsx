@@ -87,7 +87,7 @@ const NoteWrapper = (data: ServerNote) => {
             <h3 id={`${data.Id}-Title`} className="text-lg font-bold">
               {data.Title}
             </h3>
-            <p id={`${data.Id}-Description`} className="py-4">
+            <p id={`${data.Id}-Description`} className="py-4 overflow-auto">
               {data.Description}
             </p>
             <div className="modal-action">
