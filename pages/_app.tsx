@@ -7,16 +7,15 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   useLayoutEffect(() => {
     const theme = localStorage.getItem("data-theme");
-    if(theme)
-    {
-      document.getElementsByTagName("html")[0].setAttribute("data-theme",theme);
-    }else{
-      localStorage.setItem("data-theme", "cupcake")
-      document.getElementsByTagName("html")[0].setAttribute("data-theme","cupcake");
+    if (theme) {
+      document.getElementsByTagName("html")[0].setAttribute("data-theme", theme);
+    } else {
+      localStorage.setItem("data-theme", "pastel")
+      document.getElementsByTagName("html")[0].setAttribute("data-theme", "pastel");
     }
   }, [])
 
-  return <div className='h-screen  w-screen flex flex-col content-between items-center bg-base-100 text-base-content'><Navbar/><Component {...pageProps} /></div>
+  return <div className='h-screen  w-screen flex flex-col content-between items-center bg-base-100 text-base-content'><Navbar /><Component {...pageProps} /></div>
 }
 
 export default MyApp

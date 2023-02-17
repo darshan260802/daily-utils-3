@@ -20,11 +20,11 @@ const Navbar = () => {
   }, [router.pathname]);
 
   useLayoutEffect(() => {
-    if(window.location.pathname.indexOf("shared") === -1) setIsShared(false);
+    if (window.location.pathname.indexOf("shared") === -1) setIsShared(false);
     const theme = localStorage.getItem("data-theme");
-    if(theme && theme === "cupcake") document.getElementById("theme-changer")?.classList.add("swap-active");
+    if (theme && theme === "pastel") document.getElementById("theme-changer")?.classList.add("swap-active");
   }, [])
-  
+
 
   const logout = () => {
     localStorage.removeItem("userId");
@@ -36,24 +36,22 @@ const Navbar = () => {
     window.location = "/";
   }
 
-  const toggleMode = () =>{
+  const toggleMode = () => {
     const element = document.getElementsByTagName('html')[0];
     const changer = document.getElementById("theme-changer");
-  
-    
-    if(element.getAttribute("data-theme") === "cupcake")
-    {
-      element.setAttribute("data-theme", "forest")
-      localStorage.setItem("data-theme", "forest")
+
+
+    if (element.getAttribute("data-theme") === "pastel") {
+      element.setAttribute("data-theme", "night")
+      localStorage.setItem("data-theme", "night")
       changer?.classList.remove("swap-active")
     }
-    else
-    {
-      element.setAttribute("data-theme", "cupcake")
-      localStorage.setItem("data-theme", "cupcake")
+    else {
+      element.setAttribute("data-theme", "pastel")
+      localStorage.setItem("data-theme", "pastel")
       changer?.classList.add("swap-active")
     }
-    
+
   }
 
   return (
@@ -81,20 +79,20 @@ const Navbar = () => {
             className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
           >
             <li>
-            <Link href="Notes">
-              <a className={`${router.pathname.indexOf('Notes') !== -1 && 'bg-primary text-base-100 rounded-lg'}`} >Notes</a>
-            </Link>
-          </li>
-          <li>
-            <Link href="Todo">
-              <a className={`${router.pathname.indexOf('Todo') !== -1 && 'bg-primary text-base-100 rounded-lg'}`} >To-Do</a>
-            </Link>
-          </li>
-          <li>
-            <Link href="Linkshort">
-              <a className={`${router.pathname.indexOf('Linkshort') !== -1 && 'bg-primary text-base-100 rounded-lg'}`} >LinkShort</a>
-            </Link>
-          </li>
+              <Link href="Notes">
+                <a className={`${router.pathname.indexOf('Notes') !== -1 && 'bg-primary text-base-100 rounded-lg'}`} >Notes</a>
+              </Link>
+            </li>
+            <li>
+              <Link href="Todo">
+                <a className={`${router.pathname.indexOf('Todo') !== -1 && 'bg-primary text-base-100 rounded-lg'}`} >To-Do</a>
+              </Link>
+            </li>
+            <li>
+              <Link href="Linkshort">
+                <a className={`${router.pathname.indexOf('Linkshort') !== -1 && 'bg-primary text-base-100 rounded-lg'}`} >LinkShort</a>
+              </Link>
+            </li>
           </ul>}
         </div>}
         <h1 className="normal-case text-3xl font-bold">
@@ -136,7 +134,7 @@ const Navbar = () => {
           >
             <li>
               <Link href='/' >
-              <a>Homepage</a>
+                <a>Homepage</a>
               </Link>
             </li>
             {isLogin ? (
@@ -163,7 +161,7 @@ const Navbar = () => {
             <li>
               <button onClick={getHome} >Get Access</button>
             </li>
-            </ul>}
+          </ul>}
         </div>
       </div>
     </div>
