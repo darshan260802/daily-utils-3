@@ -22,7 +22,7 @@ const Navbar = () => {
   useLayoutEffect(() => {
     if (window.location.pathname.indexOf("shared") === -1) setIsShared(false);
     const theme = localStorage.getItem("data-theme");
-    if (theme && theme === "pastel") document.getElementById("theme-changer")?.classList.add("swap-active");
+    if (theme && theme === "synthwave") document.getElementById("theme-changer")?.classList.add("swap-active");
   }, [])
 
 
@@ -41,14 +41,14 @@ const Navbar = () => {
     const changer = document.getElementById("theme-changer");
 
 
-    if (element.getAttribute("data-theme") === "pastel") {
+    if (element.getAttribute("data-theme") === "synthwave") {
       element.setAttribute("data-theme", "night")
       localStorage.setItem("data-theme", "night")
       changer?.classList.remove("swap-active")
     }
     else {
-      element.setAttribute("data-theme", "pastel")
-      localStorage.setItem("data-theme", "pastel")
+      element.setAttribute("data-theme", "synthwave")
+      localStorage.setItem("data-theme", "synthwave")
       changer?.classList.add("swap-active")
     }
 

@@ -10,8 +10,8 @@ function MyApp({ Component, pageProps }: AppProps) {
     if (theme) {
       document.getElementsByTagName("html")[0].setAttribute("data-theme", theme);
     } else {
-      localStorage.setItem("data-theme", "pastel")
-      document.getElementsByTagName("html")[0].setAttribute("data-theme", "pastel");
+      localStorage.setItem("data-theme", "synthwave")
+      document.getElementsByTagName("html")[0].setAttribute("data-theme", "synthwave");
     }
   }, [])
 
